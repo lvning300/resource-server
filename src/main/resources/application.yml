@@ -1,0 +1,31 @@
+auth-server-url: http://localhost:9030 # 授权服务地址
+server:
+  port: 9040
+
+spring:
+  application:
+    name: resource-server
+  # DataSource Config
+  datasource:
+    hikari:
+      idle-timeout: 200000
+      maximum-pool-size: 10
+      minimum-idle: 30
+      connection-timeout: 600000
+      connection-test-query: SELECT 1
+      pool-name: HikariPool
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mp?useSSL=false&useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=false&allowMultiQueries=true
+    username: root
+    password: 123456
+
+security:
+  oauth2:
+    client:
+      client-id: app_999999
+      client-secret: password
+      scope: read
+      access-token-uri: ${auth-server-url}/oauth/token
+      user-authorization-uri: ${auth-server-url}/oauth/authorize
+    resource:
+      token-info-uri: ${auth-server-url}/oauth/check_token #检查令牌
